@@ -1,6 +1,6 @@
-#Program-learning
-#####Learning Algorithm, Data structure and coding skills to prepare for OI contests.
-##Description
+# Program-learning
+##### Learning Algorithm, Data structure and coding skills to prepare for OI contests.
+## Description
 directory **notes** stores experiences, conclusions about each period of learning 
 and summary by each algorithm.  
 **todo.txt** and **done.txt** are todo-list files base on [todo.txt-cli][todo.txt-cli].  
@@ -10,9 +10,9 @@ directory **tools** stores my tools. It contains:
 * project statistical/update scripts
 
 others are cpp source codes to solve problems  
-#####link to [Notes](./notes/content.md)
+##### link to [Notes](./notes/content.md)
 
-###Online Judge practices statistics
+### Online Judge practices statistics
 project start time: Oct 1 2020  
 total accepted problems count: 14
 
