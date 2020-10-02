@@ -23,5 +23,4 @@ total accepted problems count: 14
 [todo.txt-cli]: https://github.com/todotxt/todo.txt-cli
 [nowcoder]: https://ac.nowcoder.com/acm/home
 [luogu]: https://luogu.com.cn
-[oi_advance]: https://ac.nowcoder.com/acm/archive/oi-advance/problem
-
+[oi_advance]: https://ac.nowcoder.com/acm/archivshe/oi-advance/problem
