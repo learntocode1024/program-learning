@@ -14,9 +14,9 @@ others are cpp source codes to solve problems
 
 ### Online Judge practices statistics
 project start time: Oct 1 2020  
-total accepted problems count: 14
+total accepted problems count: 15
 
-[Luogu][luogu]: 11  
+[Luogu][luogu]: 12  
 [nowcoder][nowcoder] (NC): 3  
 [Examples on _OI Advance_][oi_advance]  (EX): 0  
 
