@@ -19,7 +19,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 error() {
-    echo -e "$0: ${RED}error:${NC} $@" >&2
+    echo -e "test.sh: ${RED}error:${NC} $@" >&2
     exit 1
 }
 
