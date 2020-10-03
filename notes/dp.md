@@ -1,4 +1,4 @@
-### Dynamix Programming
+### Dynamic Programming
 #### Reminders
 * **dependencies** between state spaces
     * The current processing state space can depend on others.
@@ -14,7 +14,8 @@
 e.g. [Luogu1169](../luogu/Luogu1169_dp.cpp)
 #### Avoid Superfluous Calculation
 ##### When DFS
-Caution the **list-liked data**(tree). Such data can cause deep recursion layer, and huge unnecessary calculation.  
+Caution the **list-liked data**(tree). Such data can cause deep recursion layer,
+and huge unnecessary calculation.  
 see [this(Luogu3177)](../luogu/Luogu3177.cpp) line 31:
 ```
  // use special method to avoid superfluous calculates.
@@ -36,7 +37,7 @@ see [this(Luogu3177)](../luogu/Luogu3177.cpp) line 31:
     }
   }
 ```
-Wrost O()
+Worst O()
 
 rather than
 ```
@@ -49,6 +50,6 @@ rather than
       }
     }
 ```
-Wrost O()  
+Worst O()  
 #### DP on tree
 * to avoid search back: use `if (~size[])` rather than `bool vis[]`
