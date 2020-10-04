@@ -2,3 +2,4 @@
 (B) dp promotion +dp @learn
 (C) learn dynamic programming +algorithm @learn
 (F) solve Luogu1169 without dp +practice @problem-to-solve
+(A) Luogu CF708C +practice @dp
