@@ -3,11 +3,11 @@
 #################################### Global ####################################
 PROJECT=program-learning
 error() {
-  echo "program-learning: \033[1;31merror: \033[0m$@" > /dev/stderr
+  printf "program-learning: \033[1;31merror: \033[0m%s\n" "$@" > /dev/stderr
   exit 1
 }
 warning() {
-  echo "program-learning: \033[38;2;225;140;0mwarning: \033[0m$@"
+  printf "program-learning: \033[38;2;225;140;0mwarning: \033[0m%s\n" "$@"
 }
 ############################## Project statistic ###############################
 # shellcheck disable=SC2044
@@ -112,7 +112,7 @@ _init() {
       (cd nowcoder_oi_advance && _EX "$str")
       ;;
     *)
-      error "init: invalid file string: $str"
+      error "init: invalid file string: ${str:-(NULL)}"
       ;;
   esac
   unset type
@@ -156,8 +156,8 @@ _todo() {
 ##################################### main #####################################
 set -e
 if [ "${$(pwd)##*/}" != "$PROJECT" ]; then
-  if [ "${PROJ##*/}" != "$PROJECT" ]; then
-    error "switch to project root directory first!"
+  if [ "${dir_proj_program_learning_tools_temporary##*/}" != "$PROJECT" ]; then
+    error "invalid \$PROJ setting: ${dir_proj_program_learning_tools_temporary:-(NULL)}"
   else
     cd "$PROJ"
   fi
