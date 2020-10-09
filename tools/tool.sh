@@ -159,7 +159,9 @@ _todo_diff() {
     warning "local todo.txt not exist"
   fi
   echo "Left: repo------------------------------------------------------Right: Local"
+  set +e
   diff -yN .todo/todo.txt $HOME/.todo/todo.txt
+  set -e
 }
 
 _todo_push() {
@@ -170,7 +172,20 @@ _todo_push() {
 }
 
 _todo_pull() {
-  error "Don't do this"
+  _todo_diff
+  warning "all local items will be lost!!!"
+  read "yn?Pull anyway?(y/n)"
+  case $yn in
+    y)
+      cat ".todo/todo.txt" > "$HOME/.todo/todo.txt"
+      ;;
+    n)
+      echo Exited
+      exit
+      ;;
+    *)
+      exit
+  esac
 }
 
 _todo() {
