@@ -1,7 +1,7 @@
 // luogu/Luogu708C.cpp
 // https://codeforces.com/problemset/problem/708/C
 // Created by learntocode1024 on 10/04/20.
-// 
+// AC on Oct 9 2020
 
 #include <iostream>
 #include <algorithm>
@@ -47,7 +47,7 @@ void pre_proc(const int &curr) {
 
 void dfs(const int &curr, const int &fa) {
   ans[curr] = true;
-  if (size[mx_chi[curr]] > (n >> 2)) ans[curr] = (size[mx_chi[curr]] -\
+  if (size[mx_chi[curr]] > (n >> 1)) ans[curr] = (size[mx_chi[curr]] -\
                                                   dp[mx_chi[curr]][0] <= n/2);
   else if (n - size[curr] > n/2) ans[curr] = (n - size[curr] - chroot[curr] <= n/2);
   int val = n - size[curr];
@@ -74,6 +74,6 @@ int main() {
   for (int kI = 1; kI <= n; ++kI) {
     printf("%d ", ans[kI]);
   }
-  printf("\b\n");
+//  printf("\b\n");
   return 0;
 }
