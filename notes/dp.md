@@ -53,3 +53,6 @@ rather than
 Worst O()  
 #### DP on tree
 * to avoid search back: use `if (~size[])` rather than `bool vis[]`
+#### Monotonic Queue optimize
+* use on a scrolling forward range
+* when keeping a maximum / minimum value
