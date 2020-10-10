@@ -109,7 +109,7 @@ _CF() {
   ls | grep -iq "$1" && error "Codeforces: File already Exist!"
   curl -s "$url" | grep -q "<title>页面找不到了</title>" && error "CodeForces: problem not exist: $1"
   touch "${file}"
-  echo "// luogu/Luogu${1}.cpp
+  echo "// CodeForces/CF${1}.cpp
 // $url
 // Created by learntocode1024 on $(date +%D).
 // \
