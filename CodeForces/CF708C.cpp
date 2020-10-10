@@ -1,4 +1,4 @@
-// luogu/Luogu708C.cpp
+// CodeForces/CF708C.cpp
 // https://codeforces.com/problemset/problem/708/C
 // Created by learntocode1024 on 10/04/20.
 // AC on Oct 9 2020
