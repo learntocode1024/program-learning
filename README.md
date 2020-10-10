@@ -11,15 +11,15 @@ directory **tools** stores my tools. It contains:
 
 others are cpp source codes to solve problems  
 ##### link to [Notes](./notes/content.md)
-
+ 
 ### Online Judge practices statistics  
 project start time: Oct 1 2020  
-total accepted problems count: 16  
+total accepted problems count: 18  
 
-[Luogu][luogu]: 13  
+[Luogu][luogu]: 14  
 [nowcoder][nowcoder] (NC): 3  
 [Examples on _OI Advance_][oi_advance]  (EX): 0  
-[CodeForces][CF]: 0  
+[CodeForces][CF]: 1  
 
 [todo.txt-cli]: https://github.com/todotxt/todo.txt-cli
 [nowcoder]: https://ac.nowcoder.com/acm/home
