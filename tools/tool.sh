@@ -68,7 +68,7 @@ _luogu() {
   else
     url=https://www.luogu.com.cn/problem/${1}
   fi
-  ls | grep -iq "$1" && error "luogu: File already Exist!"
+  ls | grep -iq "$file" && error "luogu: File already Exist!"
   curl -s "$url" | grep -q Exception && error "luogu: problem not exist: $1"
   touch "${file}"
   echo "// luogu/Luogu${1}.cpp
@@ -87,7 +87,7 @@ int main() {
 _NC() {
   file="NC${1}.cpp"
   url=https://ac.nowcoder.com/acm/problem/${1}
-  ls | grep -iq "$1" && error "nowcoder: File already Exist!"
+  ls | grep -iq "$file" && error "nowcoder: File already Exist!"
   curl -s "$url" | grep -q "<title>页面找不到了</title>" && error "nowcoder: problem not exist: $1"
   touch "${file}"
   echo "// luogu/Luogu${1}.cpp
@@ -106,7 +106,7 @@ int main() {
 _CF() {
   file="CF${1}.cpp"
   url=https://codeforces.com/problemset/problem/${1//[A-z]}/${1//[0-9]}
-  ls | grep -iq "$1" && error "Codeforces: File already Exist!"
+  ls | grep -iq "$file" && error "Codeforces: File already Exist!"
   curl -s "$url" | grep -q "<title>页面找不到了</title>" && error "CodeForces: problem not exist: $1"
   touch "${file}"
   echo "// CodeForces/CF${1}.cpp
@@ -128,7 +128,7 @@ _init() {
   str="$@"
   type=0
 
-  for RE in "^Lu?o?gu?\s*\K(\w{4,6})" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3}\w)"
+  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3}\w)"
   do
     echo "$str" | grep -iq -P "$RE" && str=$(echo "$str" | grep -i -Po "$RE") && break
     type=$((type + 1))
