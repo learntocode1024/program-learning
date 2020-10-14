@@ -80,3 +80,7 @@ int main() {
   get_d(root, 0);
   return 0;
 }
+
+long long get_d(const int rt, const int fa) {
+  
+}
