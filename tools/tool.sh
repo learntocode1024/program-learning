@@ -41,7 +41,9 @@ CodeForces: $CF"
   else
     echo "### Online Judge practices statistics  \
 
-project start time: Oct 1 2020  \
+project start time: Oct 1,2020  \
+
+last modified time: $(date +%D)  \
 
 total accepted problems count: $total  \
 
