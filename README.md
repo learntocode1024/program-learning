@@ -19,12 +19,12 @@ others are cpp source codes to solve problems
 * xclip
 * todo.sh-cli
 
-
 ### Online Judge practices statistics  
-project start time: Oct 1 2020  
-total accepted problems count: 18  
+project start time: Oct 1,2020  
+last modified time: 10/14/20  
+total accepted problems count: 19  
 
-[Luogu][luogu]: 14  
+[Luogu][luogu]: 15  
 [nowcoder][nowcoder] (NC): 3  
 [Examples on _OI Advance_][oi_advance]  (EX): 0  
 [CodeForces][CF]: 1  
