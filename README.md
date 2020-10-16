@@ -22,9 +22,9 @@ others are cpp source codes to solve problems
 ### Online Judge practices statistics  
 project start time: Oct 1,2020  
 last modified time: 10/16/20  
-total accepted problems count: 20  
+total accepted problems count: 21  
 
-[Luogu][luogu]: 16  
+[Luogu][luogu]: 17  
 [nowcoder][nowcoder] (NC): 3  
 [Examples on _OI Advance_][oi_advance]  (EX): 0  
 [CodeForces][CF]: 1  
