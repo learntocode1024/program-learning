@@ -2,6 +2,7 @@
 // https://ac.nowcoder.com/acm/contest/7605/A
 // Created by learntocode1024 on 10/17/20.
 // AC on 10/18/20
+
 #include <cstdio>
 #define N 3
 long long a[N], d, tmp;
