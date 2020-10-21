@@ -1,4 +1,4 @@
-// nowcoder_contest/101720/T1.cpp
+// contest/101720_NC/T1.cpp
 // https://ac.nowcoder.com/acm/contest/7605/A
 // Created by learntocode1024 on 10/17/20.
 // AC on 10/18/20
