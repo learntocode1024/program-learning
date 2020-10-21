@@ -12,27 +12,32 @@ using std::cin;
 using std::cout;
 typedef unsigned long long ULL;
 const int mod = 998244353;
-int count[26], len;
-int T, it, curr;
+int count[27], len;
+int T, it;
 ULL ans, reg;
 string base;
-string match;
+bool flag = true, error = false;
 
-inline void shift() {
+inline void shift(int ch) {
   int add = it;
-  while (base[it] - 'a' != curr) {
+  while (base[it] - 'a' != ch) {
     it++;
     it %= len;
   }
-  ans += ((it - add >= 0)? it - add : it + len - add);
+  ans += ((it - add >= 0) ? it - add : it + len - add);
+  ans %= mod;
 }
 
 inline void iter() {
-  it = (it + 1)%len; ++ans;
+  it = (it + 1) % len;
+  ++ans;
+  ans %= mod;
 }
 
 inline void iter(ULL step) {
-  it = (int)(it + step%len)%len; ans += step;
+  it = (int) (it + step % len) % len;
+  ans += step;
+  ans %= mod;
 }
 
 int main() {
@@ -41,48 +46,59 @@ int main() {
   for (char ch : base) {
     ++count[ch - 'a'];
   }
+  count[26] = 1;
   cin >> T;
+  getchar();
   while (T--) {
-    reg = 0, ans = 0, it = 0, curr = -1;
-    cin >> match;
-    match += "n"; // nil
-    for (char ch : match) {
-      if (!isdigit(ch)) {
-        if (curr == -55) {
-          if (reg) iter(reg), reg = 0;
-          else iter();
-          curr = ch - 'a';
-          continue;
-        }
-        if (curr >= 0) { // process
-          if (!count[curr]) {
-            printf("-1\n");
-            break;
-          }
-          shift();
-          if (!reg) {
-            iter();
-            curr = ch - 'a';
-            continue;
-          }
-          long long times = reg/count[curr] - 1;
-          if (times > 0) {
-            ans += times * len % mod;
-            reg -= times * count[curr];
-          }
-          while (reg) {
-            iter();
-            shift();
-            reg--;
-          }
-        }
-        curr = ch - 'a';
-      } else { // count
-        reg = (reg << 1) + (reg << 3);
-        reg += ch - '0';
+    reg = 0, ans = 0, it = 0, flag = true, error = false;
+    int val = getchar() - 'a', curr = 0;
+    while (flag) {
+      curr = getchar();
+      if (isdigit(curr)) { // count
+        reg *= 10;
+        reg += curr - '0';
+        reg %= (mod * count[val]);
+        continue;
       }
+      if (curr == '\n') flag = false;
+      if (curr >= 'a') curr -= 'a';
+      else curr = 26;
+      if (!count[curr]) { // char not exist
+        printf("-1\n");
+        error = true;
+        break;
+      }
+      // process
+      do {
+        if (val == 26) {
+          iter(reg ? reg : 1);
+          reg = 0;
+          break;
+        }
+        shift(val);
+        if (!reg) {
+          iter();
+          break;
+        }
+        if (reg > count[val]) {
+          if (reg % count[val]) {
+            ans += reg / count[val] * len % mod;
+            reg %= count[val];
+          } else {
+            ans += (reg / count[val] - 1) * len % mod;
+            reg = count[val];
+          }
+        }
+        iter();
+        while (--reg) {
+          shift(val);
+          iter();
+        }
+      } while (false);
+      // pass
+      val = curr;
     }
-    printf("%lld\n", ans);
+    if (!error) printf("%lld\n", ans);
   }
   return 0;
 }
