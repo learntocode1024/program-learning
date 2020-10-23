@@ -1,3 +1,8 @@
+// nowcoder_contest/102220_NC/T1.cpp
+// https://ac.nowcoder.com/acm/contest/7609/A
+// Created by learntocode1024 on 10/22/20.
+// AC on 10/22/20
+
 #include <cstdio>
 
 int T, a, b, c, k, sum;
