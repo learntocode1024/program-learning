@@ -2,4 +2,5 @@
 cmake-build-debug
 test*
 buf*
-a.out
+*.out
+*out
