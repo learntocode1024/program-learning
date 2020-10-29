@@ -1,7 +1,7 @@
 // luogu/Luogu3801.cpp
 // https://www.luogu.com.cn/problem/P3801
 // Created by learntocode1024 on 10/28/20.
-//
+// AC on 10/29/20
 
 #include <cstdio>
 #define MX 100005
@@ -19,9 +19,12 @@ long long query(long long* ptr, int curr) {
   return ans;
 }
 
-void update(long long* ptr, int curr) {
+void update(long long* ptr, bool* point, int curr) {
   int delta = 1;
-  if (query(ptr, curr) - query(ptr, curr - 1) == 1) curr = -1;
+  if (point[curr]) {
+    point[curr] = false;
+    delta = -1;
+  } else point[curr] = true;
   while (curr <= (*ptr)) {
     ptr[curr] += delta;
     curr += (curr & -curr);
@@ -35,13 +38,14 @@ int main() {
   while (q--) {
     scanf("%d%d%d", &op, &x1, &y1);
     if (op == 1) {
-      update(x, x1);
-      update(y, y1);
+      update(x, pt_x, x1);
+      update(y, pt_y, y1);
     } else {
-      scanf("%d%d", &y1, &y2);
-      long long ans_x = query(x, x2) - query(x, x1 - 1);
-      long long ans_y = query(y, y2) - query(y, y1 - 1);
-      printf("%lld\n", ans_x*m + ans_y*n - ans_x*ans_y);
+      scanf("%d%d", &x2, &y2);
+      --x1, --y1;
+      long long ans_x = query(x, x2) - query(x, x1);
+      long long ans_y = query(y, y2) - query(y, y1);
+      printf("%lld\n", ans_x*(y2 - y1) + ans_y*(x2 - x1) - 2*ans_x*ans_y);
     }
   }
   return 0;
