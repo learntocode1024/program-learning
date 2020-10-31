@@ -32,26 +32,26 @@ void calc_lps(char* pat, int* lps, int n) {
 int main() {
   scanf("%d%d\n", &n, &k);
   scanf("%s\n", s);
-  scanf("%s\n", t);
+  scanf("%s", t);
   calc_lps(t, lps, k);
   // compare
   int kI = 0, kJ = 0;
   while (kI < n) {
-    if (kJ == k) {
-      f[tot++] = kI - kJ;
-      kJ = lps[kJ - 1];
-      continue;
-    }
     if (s[kI] == t[kJ]) {
       ++kI;
       ++kJ;
+      if (kJ == k) {
+        f[tot++] = kI - kJ;
+        kJ = lps[kJ - 1];
+      }
     } else {
       if (kJ) kJ = lps[kJ - 1];
       else ++kI;
     }
   }
+  // calc
   long long ans = 0;
-  f[tot] = n - 1;
+  f[tot] = n - k + 1;
   for (int i = 0; i < tot; ++i) {
     ans += (f[i] + 1)*(f[i + 1] - f[i]);
   }

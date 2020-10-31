@@ -1,7 +1,7 @@
 ####__int128_t output function(c++ style)
 by [James Kanze](https://stackoverflow.com/users/649665/james-kanze)
  on stack overflow. [link](https://stackoverflow.com/questions/25114597/how-to-print-int128-in-g)
-```
+```cpp
 std::ostream&
 operator<<( std::ostream& dest, __int128_t value )
 {

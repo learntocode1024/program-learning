@@ -1,4 +1,4 @@
-// luogu/Luogu3373.cpp
+ // luogu/Luogu3373.cpp
 // https://www.luogu.com.cn/problem/P3373
 // Created by learntocode1024 on 10/26/20.
 // 
@@ -15,11 +15,6 @@ struct segment {
   int sum = 0;
   int add = 0;
   int mul = 1;
-  #define l(val) left(val)
-  #define r(val) right(val)
-  #define mul(val) tree[val].mul
-  #define add(val) tree[val].add
-  #define sum(val) tree[val].sum
   int mid() const {
     return l + (r - l)/2;
   }
@@ -37,82 +32,81 @@ inline unsigned right(unsigned val) {
 }
 
 void build(const int* p, const unsigned seg, const unsigned beg, const unsigned end) {
+  tree[seg].l = beg, tree[seg].r = end;
   if (end - beg == 1) {
-    sum(seg) = p[beg];
+    tree[seg].sum = p[beg];
     return;
   }
   const unsigned mid = beg + (end - beg)/2;
-  unsigned l = l(seg), r = r(seg);
-  tree[l].l = beg; tree[l].r = mid;
-  tree[r].l = mid; tree[r].r = end;
+  unsigned l = seg*2 + 1, r = seg*2 + 2;
   build(p, l, beg, mid);
   build(p, r, mid, end);
-  sum(seg) = (sum(l(seg)) + sum(r(seg))) % mod;
+  tree[seg].sum = (tree[seg*2 + 1].sum + tree[seg*2 + 2].sum) % mod;
 }
 
 void push_down(unsigned curr) {
-  unsigned l = l(curr), r = r(curr);
-  // val
-  sum(l) = (sum(l) * mul(curr) + add(curr)*tree[l].len())%mod;
-  sum(r) = (sum(r) * mul(curr) + add(curr)*tree[r].len())%mod;
-  // tag push down
-  mul(l) = (mul(l) * mul(curr))%mod;
-  add(l) = (add(l) * mul(curr) + add(curr))%mod;
-  mul(r) = (mul(r) * mul(curr))%mod;
-  add(r) = (add(r) * mul(curr) + add(curr))%mod;
-  add(curr) = 0;
-  mul(curr) = 1;
+  unsigned l = left(curr), r = right(curr);
+
+  tree[l].sum = (tree[l].sum * tree[curr].mul + tree[curr].add*tree[l].len())%mod;
+  tree[r].sum = (tree[r].sum * tree[curr].mul + tree[curr].add*tree[r].len())%mod;
+
+  tree[l].mul = (tree[l].mul * tree[curr].mul)%mod;
+  tree[l].add = (tree[l].add c* tree[curr].mul + tree[curr].add)%mod;
+  tree[r].mul = (tree[r].mul * tree[curr].mul)%mod;
+  tree[r].add = (tree[r].add * tree[curr].mul + tree[curr].add)%mod;
+  tree[curr].add = 0;
+  tree[curr].mul = 1;
 }
 
 void seg_mul(const unsigned seg, int beg, int end, int val) {
-  // equal
+
   if (beg == tree[seg].l && end == tree[seg].r) {
-    sum(seg) = (sum(seg) * val)%mod;
-    add(seg) = (add(seg) * val)%mod;
-    mul(seg) = (mul(seg) * val)%mod;
+    tree[seg].sum = (tree[seg].sum * val)%mod;
+    tree[seg].add = (tree[seg].add * val)%mod;
+    tree[seg].mul = (tree[seg].mul * val)%mod;
     return;
   }
   int mid = tree[seg].mid();
   push_down(seg);
-  if (beg < mid) { // left covered
-    seg_mul(l(seg), beg, mid, val);
+  if (beg < mid) {
+    seg_mul(seg*2 + 1, beg, mid, val);
   }
-  if (end > mid) { // right covered
-    seg_mul(r(seg), mid, end, val);
+  if (end > mid) {
+    seg_mul(seg*2 + 2, mid, end, val);
   }
-  sum(seg) = sum(l(seg)) + sum(r(seg));
+  tree[seg].sum = tree[seg*2 + 1].sum + tree[seg*2 + 2].sum;
 }
 
 void seg_add(const unsigned seg, int beg, int end, int val) {
-  // equal
+
   if (beg == tree[seg].l && end == tree[seg].r) {
-    sum(seg) = (sum(seg) + val *tree[seg].len())%mod;
-    add(seg) = (add(seg) + val)%mod;
+    tree[seg].sum = (tree[seg].sum + val *tree[seg].len())%mod;
+    tree[seg].add = (tree[seg].add + val)%mod;
     return;
   }
   int mid = tree[seg].mid();
   push_down(seg);
-  if (beg < mid) { // left covered
-    seg_add(l(seg), beg, mid, val);
+  if (beg < mid) {
+    seg_add(seg*2 + 1, beg, mid, val);
   }
-  if (end > mid) { // right covered
-    seg_add(r(seg), mid, end, val);
+  if (end > mid) {
+    seg_add(seg*2 + 2, mid, end, val);
   }
-  sum(seg) = sum(l(seg)) + sum(r(seg));
+  tree[seg].sum = tree[seg*2 + 1].sum + tree[seg*2 + 2].sum;
 }
 
 int query(const unsigned seg, int beg, int end) {
   if (beg == tree[seg].l && end == tree[seg].r) {
-    return sum(seg);
+    return tree[seg].sum;
   }
   int mid = tree[seg].mid();
   push_down(seg);
   int ans = 0;
-  if (beg < mid) { // left covered
-    ans += query(l(seg), beg, mid);
+  if (beg < mid) {
+    ans += query(seg*2 + 1, beg, mid);
   }
-  if (end > mid) { // right covered
-    ans += query(r(seg), mid, end);
+  if (end > mid) {
+    ans += query(seg*2 + 2, mid, end);
   }
   return ans;
 }
@@ -125,8 +119,6 @@ int main() {
   for (int kI = 0; kI < n; ++kI) {
     cin >> tmp[kI];
   }
-  tree[root].l = 0;
-  tree[root].r = n;
   build(tmp, root, 0, n);
   int op, x, y, k;
   while (m--) {

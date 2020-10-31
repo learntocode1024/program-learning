@@ -17,7 +17,7 @@ e.g. [Luogu1169](../luogu/Luogu1169_dp.cpp)
 Caution the **list-liked data**(tree). Such data can cause deep recursion layer,
 and unnecessary / repeated calculation.  
 see [this(Luogu3177)](../luogu/Luogu3177.cpp) line 31:
-```
+```cpp
  // use special method to avoid superfluous calculates.
 dfs(...) {
   do DFS...
@@ -40,7 +40,7 @@ dfs(...) {
 Worst O()
 
 rather than
-```
+```cpp
 // dp
 for (int i = min(k, size[curr]); i >= 0; --i) {
   for (int j = 0; j <= min(i, size[child]); ++j) {

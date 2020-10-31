@@ -105,6 +105,12 @@ int main() {
 }" > "${file}"
 }
 
+_NC_contest() {
+  dir="${1}_NC"
+  mkdir "contest/$dir" && cd "$_"
+  
+}
+
 _CF() {
   file="CF${1}.cpp"
   url=https://codeforces.com/problemset/problem/${1//[A-z]}/${1//[0-9]}
