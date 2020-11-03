@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 #################################### Global ####################################
 PROJECT=program-learning
 error() {
@@ -133,9 +131,9 @@ _CFCONTEST() {
   id="$1"
   url=https://codeforces.com/contest/${id}
   test -d "./CF${id}" && error "Codeforces: Contest directory already Exist!"
-  curl -s "https://codeforces.com/api/contest.standings?contestId=$id" | grep -q "FAILED" && error "CodeForces: contest not found: $id"
+  #curl -s "https://codeforces.com/api/contest.standings?contestId=$id" | grep -q "FAILED" && error "CodeForces: contest not found: $id"
   mkdir "./CF${id}" && cd $_
-  for rk in "A" "B" "C" "D" "E"
+  for rk in "A" "B" "C" "D" "E" "F"
   do
     echo "// CodeForces/CF${id}/$rk.cpp
 // $url/problem/$rk
@@ -157,7 +155,7 @@ _init() {
   str="$@"
   type=0
 
-  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3,5}\w)" "cf\s*\K([0-9]{3,5}$)"
+  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3,5}[A-Z]$)" "cf\s*\K([0-9]{3,5}$)"
   do
     echo "$str" | grep -iq -P "$RE" && str=$(echo "$str" | grep -i -Po "$RE") && break
     type=$((type + 1))
