@@ -5,11 +5,22 @@
 
 #include <iostream>
 #define MX 100005
+#define MX4 400005
 using std::cin;
 using std::cout;
 const int mod = 571373;
 const unsigned root = 0;
 
+int sum[MX4], mul[MX4], add[MX4];
+
+void push_down(unsigned curr, int l, int r) {
+  if (mul[curr] == 1 && add[curr] == 0) return;
+  unsigned left = (curr << 1) + 1, right = left + 1;
+  int mid = l + (r - l)/2;
+  sum[left] = sum[left] * mul[curr] + add[curr];
+  sum[right] = sum[right] * mul[curr] + add[curr];
+  
+}
 
 int n, m, p;
 
@@ -30,10 +41,10 @@ int main() {
     } else {
       cin >> k;
       if (op == 2) {
-        add(root, x, y, k);
+        seg_add(root, x, y, k);
         continue;
       }
-      mul(root, x, y, k);
+      seg_mul(root, x, y, k);
       continue;
     }
   }
