@@ -108,7 +108,6 @@ int main() {
 _NC_contest() {
   dir="${1}_NC"
   mkdir "contest/$dir" && cd "$_"
-  
 }
 
 _CF() {
@@ -130,13 +129,35 @@ int main() {
 }" > "${file}"
 }
 
+_CFCONTEST() {
+  id="$1"
+  url=https://codeforces.com/contest/${id}
+  test -d "./CF${id}" && error "Codeforces: Contest directory already Exist!"
+  curl -s "https://codeforces.com/api/contest.standings?contestId=$id" | grep -q "FAILED" && error "CodeForces: contest not found: $id"
+  mkdir "./CF${id}" && cd $_
+  for rk in "A" "B" "C" "D" "E"
+  do
+    echo "// CodeForces/CF${id}/$rk.cpp
+// $url/problem/$rk
+// Created by learntocode1024 on $(date +%D).
+// \
+
+
+int main() {
+  \
+
+  return 0;
+}" > "$rk.cpp"
+  done
+}
+
 ##################################### Init #####################################
 # shellcheck disable=SC2120
 _init() {
   str="$@"
   type=0
 
-  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3}\w)"
+  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3,5}\w)" "cf\s*\K([0-9]{3,5}$)"
   do
     echo "$str" | grep -iq -P "$RE" && str=$(echo "$str" | grep -i -Po "$RE") && break
     type=$((type + 1))
@@ -153,6 +174,9 @@ _init() {
       ;;
     3)
       (cd CodeForces && _CF "$str")
+      ;;
+    4)
+      (cd CodeForces && _CFCONTEST "$str")
       ;;
     *)
       error "init: invalid file string: ${str:-(NULL)}"
@@ -223,5 +247,6 @@ if [ "${$(pwd)##*/}" != "$PROJECT" ]; then
   fi
 fi
 cmd=$1
+cf_tmp=${dir_proj_program_learning_tools_temporary}/templates/codeforces
 shift
 $cmd "$@"
