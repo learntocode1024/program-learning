@@ -136,7 +136,7 @@ _init() {
   str="$@"
   type=0
 
-  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3}\w)"
+  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3,5}\w)"
   do
     echo "$str" | grep -iq -P "$RE" && str=$(echo "$str" | grep -i -Po "$RE") && break
     type=$((type + 1))
