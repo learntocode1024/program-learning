@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <queue>
+#include <stack>
 #define MX 200005
 using std::cin;
 using std::cout;
