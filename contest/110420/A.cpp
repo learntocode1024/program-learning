@@ -1,8 +1,12 @@
 #include <iostream>
+#include <random>
+std::random_device rd;
+std::uniform_int_distribution
 using std::cout;
 
 int mx = 100000;
 int fac[4], tot, sum;
+int next = 0;
 
 int main() {
   for (int kI = 6; kI <= mx; ++ kI) {
