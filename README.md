@@ -14,7 +14,7 @@ others are cpp source codes to solve problems
 ##### link to [Notes](./notes/content.md)
 
 ### Requirement
-* c++11 support
+* c99/c++98 standard
 * GNU time command
 * xclip
 * todo.sh-cli
