@@ -5,3 +5,4 @@ buf*
 *.out
 *out
 out
+debug/*
