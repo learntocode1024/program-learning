@@ -1,5 +1,18 @@
 #################################### Global ####################################
 PROJECT=program-learning
+set -e
+if [ "${$(pwd)##*/}" != "$PROJECT" ]; then
+  if [ "${dir_proj_program_learning_tools_temporary##*/}" != "$PROJECT" ]; then
+    exit 1
+  else
+    cd "$dir_proj_program_learning_tools_temporary"
+  fi
+fi
+cmd=$1
+shift
+
+proj_root=${dir_proj_program_learning_tools_temporary}
+
 error() {
   printf "program-learning: \033[1;31merror: \033[0m%s\n" "$@" > /dev/stderr
   exit 1
@@ -74,20 +87,20 @@ __fill() {
   src=${1}
   file=${2}
   url=${3}
-  if [ "-" == "$src" ]; then
+  if [ "-" = "$src" ]; then
     src=$cpp
   fi
-  sed -e 's/$DATE/'"$(date +%m\\/%d\\/%y)"'/' \
-      -e 's/$USERNAME/'"$username"'/' \
-      -e 's/$FILEDIR/'"$file"'/' \
-      -e 's/$PROBLEMURL/'"$url"'/' \
+  sed -e 's%$DATE%'"$(date +%D)"'%' \
+      -e 's%$USERNAME%'"$username"'%' \
+      -e 's%$FILEDIR%'"$file"'%' \
+      -e 's%$PROBLEMURL%'"$url"'%' \
       "$src" > "$proj_root/$file"
 }
 
 ################################ Header Comment ################################
 # shellcheck disable=SC2120
 _luogu() {
-  file="Luogu${1}.cpp"
+  file="luogu/Luogu${1}.cpp"
   if echo "${1}" | grep -iq -E "^[0-9]+$"; then
     url=https://www.luogu.com.cn/problem/P${1}
   else
@@ -95,21 +108,11 @@ _luogu() {
   fi
   ls | grep -iq "$file" && error "luogu: File already Exist!"
   curl -s "$url" | grep -q Exception && error "luogu: problem not exist: $1"
-  touch "${file}"
-  echo "// luogu/Luogu${1}.cpp
-// $url
-// Created by learntocode1024 on $(date +%D).
-// \
-
-
-int main() {
-  \
-
-  return 0;
-}" > "${file}"
+  __fill - "$file" "$url"
 }
 
 _NC() {
+  exit 1
   file="NC${1}.cpp"
   url=https://ac.nowcoder.com/acm/problem/${1}
   ls | grep -iq "$file" && error "nowcoder: File already Exist!"
@@ -129,6 +132,7 @@ int main() {
 }
 
 _NC_contest() {
+  exit 1
   dir="${1}_NC"
   mkdir "contest/$dir" && cd "$_"
 }
@@ -142,6 +146,7 @@ _CF() {
 }
 
 _CFCONTEST() {
+  exit 1
   id="$1"
   url=https://codeforces.com/contest/${id}
   dir="CodeForces/CF${id}"
@@ -252,16 +257,4 @@ _todo() {
 }
 
 ##################################### main #####################################
-set -e
-if [ "${$(pwd)##*/}" != "$PROJECT" ]; then
-  if [ "${dir_proj_program_learning_tools_temporary##*/}" != "$PROJECT" ]; then
-    error "invalid \$PROJ setting: ${dir_proj_program_learning_tools_temporary:-(NULL)}"
-  else
-    cd "$dir_proj_program_learning_tools_temporary"
-  fi
-fi
-cmd=$1
-cf_tmp=${dir_proj_program_learning_tools_temporary}/templates/codeforces
-proj_root=${dir_proj_program_learning_tools_temporary}
-shift
 $cmd "$@"
