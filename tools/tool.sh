@@ -59,6 +59,31 @@ total accepted problems count: $total  \
   unset total luogu NC EX
 }
 
+################################## Templates ###################################
+
+cpp="$proj_root/templates/cpp.cpp"
+username=learntocode1024
+
+# __fill SOURCE(- for defalt) DESTINATION URL
+# Predefined Variables List
+### $DATE
+### $USERNAME
+### $PROBLEMURL
+### $FILEDIR
+__fill() {
+  src=${1}
+  file=${2}
+  url=${3}
+  if [ "-" == "$src" ]; then
+    src=$cpp
+  fi
+  sed -e 's/$DATE/'"$(date +%m\\/%d\\/%y)"'/' \
+      -e 's/$USERNAME/'"$username"'/' \
+      -e 's/$FILEDIR/'"$file"'/' \
+      -e 's/$PROBLEMURL/'"$url"'/' \
+      "$src" > "$proj_root/$file"
+}
+
 ################################ Header Comment ################################
 # shellcheck disable=SC2120
 _luogu() {
@@ -109,32 +134,23 @@ _NC_contest() {
 }
 
 _CF() {
-  file="CF${1}.cpp"
+  file="CodeForces/CF${1}.cpp"
   url=https://codeforces.com/problemset/problem/${1//[A-z]}/${1//[0-9]}
   ls | grep -iq "$file" && error "Codeforces: File already Exist!"
-  curl -s "$url" | grep -q "<title>页面找不到了</title>" && error "CodeForces: problem not exist: $1"
-  touch "${file}"
-  echo "// CodeForces/CF${1}.cpp
-// $url
-// Created by learntocode1024 on $(date +%D).
-// \
-
-
-int main() {
-  \
-
-  return 0;
-}" > "${file}"
+  #curl -s "$url" | grep -q "<title>页面找不到了</title>" && error "CodeForces: problem not exist: $1"
+  __fill - "$file" "$url"
 }
 
 _CFCONTEST() {
   id="$1"
   url=https://codeforces.com/contest/${id}
-  test -d "./CF${id}" && error "Codeforces: Contest directory already Exist!"
+  dir="CodeForces/CF${id}"
+  test -d "$proj_root/$dir" && error "Codeforces: Contest directory already Exist!"
   #curl -s "https://codeforces.com/api/contest.standings?contestId=$id" | grep -q "FAILED" && error "CodeForces: contest not found: $id"
-  mkdir "./CF${id}" && cd $_
+  mkdir "$proj_root/$dir"
   for rk in "A" "B" "C" "D" "E" "F"
   do
+    __fill - "$file" "$url"
     echo "// CodeForces/CF${id}/$rk.cpp
 // $url/problem/$rk
 // Created by learntocode1024 on $(date +%D).
@@ -162,19 +178,19 @@ _init() {
   done
   case $type in
     0)
-      (cd luogu && _luogu "$str")
+      _luogu "$str"
       ;;
     1)
-      (cd nowcoder_acm && _NC "$str")
+      _NC "$str"
       ;;
     2)
-      (cd nowcoder_oi_advance && _EX "$str")
+      _EX "$str"
       ;;
     3)
-      (cd CodeForces && _CF "$str")
+      _CF "$str"
       ;;
     4)
-      (cd CodeForces && _CFCONTEST "$str")
+      _CFCONTEST "$str"
       ;;
     *)
       error "init: invalid file string: ${str:-(NULL)}"
@@ -246,5 +262,6 @@ if [ "${$(pwd)##*/}" != "$PROJECT" ]; then
 fi
 cmd=$1
 cf_tmp=${dir_proj_program_learning_tools_temporary}/templates/codeforces
+proj_root=${dir_proj_program_learning_tools_temporary}
 shift
 $cmd "$@"
