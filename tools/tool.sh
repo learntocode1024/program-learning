@@ -140,13 +140,16 @@ _NC_contest() {
 _CF() {
   file="CodeForces/CF${1}.cpp"
   url=https://codeforces.com/problemset/problem/${1//[A-z]}/${1//[0-9]}
+  if [ -d "CF${1//[A-z]}" ]; then
+    file="CodeForces/CF${1//[A-z]}/${1//[0-9]}.cpp"
+    url=https://codeforces.com/contest/${1//[A-z]}/problem/${1//[0-9]}
+  fi
   ls | grep -iq "$file" && error "Codeforces: File already Exist!"
   #curl -s "$url" | grep -q "<title>页面找不到了</title>" && error "CodeForces: problem not exist: $1"
   __fill - "$file" "$url"
 }
 
 _CFCONTEST() {
-  exit 1
   id="$1"
   url=https://codeforces.com/contest/${id}
   dir="CodeForces/CF${id}"
@@ -155,18 +158,9 @@ _CFCONTEST() {
   mkdir "$proj_root/$dir"
   for rk in "A" "B" "C" "D" "E" "F"
   do
-    __fill - "$file" "$url"
-    echo "// CodeForces/CF${id}/$rk.cpp
-// $url/problem/$rk
-// Created by learntocode1024 on $(date +%D).
-// \
-
-
-int main() {
-  \
-
-  return 0;
-}" > "$rk.cpp"
+    currurl=$url/problem/$rk
+    file=$dir/$rk.cpp;
+    __fill - "$file" "$currurl"
   done
 }
 
