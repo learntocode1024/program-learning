@@ -21,13 +21,13 @@ others are cpp source codes to solve problems
 
 ### Online Judge practices statistics  
 project start time: Oct 1,2020  
-last modified time: 10/31/20  
-total accepted problems count: 39  
+last modified time: 11/24/20  
+total accepted problems count: 45  
 
-[Luogu][luogu]: 23  
+[Luogu][luogu]: 24  
 [nowcoder][nowcoder] (NC): 3  
 [Examples on _OI Advance_][oi_advance]  (EX): 0  
-[CodeForces][CF]: 1  
+[CodeForces][CF]: 6  
 
 [todo.txt-cli]: https://github.com/todotxt/todo.txt-cli
 [nowcoder]: https://ac.nowcoder.com/acm/home
