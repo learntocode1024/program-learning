@@ -5,8 +5,8 @@
 
 #include <cstdio>
 #include <cstring>
-#define MX 1000005
-#define MX_4 4000005
+#define MX 100005
+#define MX_4 400005
 
 inline int min(const int &a, const int &b) {
   if (a < b) return a;
