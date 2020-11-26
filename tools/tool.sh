@@ -1,17 +1,12 @@
 #################################### Global ####################################
 PROJECT=program-learning
 set -e
-if [ "${$(pwd)##*/}" != "$PROJECT" ]; then
-  if [ "${dir_proj_program_learning_tools_temporary##*/}" != "$PROJECT" ]; then
-    exit 1
-  else
-    cd "$dir_proj_program_learning_tools_temporary"
-  fi
-fi
 cmd=$1
 shift
 
-proj_root=${dir_proj_program_learning_tools_temporary}
+if ! [ -d "$proj_root" ]; then
+  exit 1;
+fi
 
 error() {
   printf "program-learning: \033[1;31merror: \033[0m%s\n" "$@" > /dev/stderr
