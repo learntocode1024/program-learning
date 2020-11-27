@@ -3,6 +3,7 @@
 // Created by learntocode1024 on 10/04/20.
 // AC on Oct 9 2020
 
+#include <cstdio>
 #include <iostream>
 #include <algorithm>
 #define MX 400001
@@ -10,7 +11,7 @@ using std::cin;
 using std::max;
 struct edge {
   int to;
-  edge* nxt = nullptr;
+  edge* nxt = NULL;
 };
 edge* head[MX];
 
@@ -27,7 +28,7 @@ bool ans[MX];
 
 void pre_proc(const int &curr) {
   size[curr] = 1;
-  for (edge* iter = head[curr]; iter != nullptr; iter = iter->nxt) {
+  for (edge* iter = head[curr]; iter != NULL; iter = iter->nxt) {
     int child = iter->to;
     if (size[child]) continue;
     pre_proc(child);
@@ -52,7 +53,7 @@ void dfs(const int &curr, const int &fa) {
   else if (n - size[curr] > n/2) ans[curr] = (n - size[curr] - chroot[curr] <= n/2);
   int val = n - size[curr];
   if (val > n/2) val = chroot[curr];
-  for (edge* iter = head[curr]; iter != nullptr; iter = iter->nxt) {
+  for (edge* iter = head[curr]; iter != NULL; iter = iter->nxt) {
     int child = iter->to;
     if (child == fa) continue;
     chroot[child] = max(val, dp[curr][fm[curr] == child]);
@@ -62,7 +63,7 @@ void dfs(const int &curr, const int &fa) {
 
 int main() {
   std::ios::sync_with_stdio(false);
-  cin.tie(nullptr);
+  cin.tie(NULL);
   cin >> n;
   for (int kI = 1, a, b; kI < n; ++kI) {
     cin >> a >> b;
