@@ -159,13 +159,35 @@ _CFCONTEST() {
   done
 }
 
+_CONTEST() {
+  id="$1"
+  echo $id
+  cnt="$2"
+  url="$3"
+  dir="contest/${id}"
+  mkdir "$proj_root/$dir"
+  for rk in "A" "B" "C" "D" "E" "F"
+  do
+    if [ $cnt -eq 0 ]; then; break; fi
+    currurl=$url/problem/$rk
+    file=$dir/$rk.cpp;
+    __fill - "$file" "$currurl"
+    cnt=$((cnt - 1))
+  done
+}
+
 ##################################### Init #####################################
 # shellcheck disable=SC2120
 _init() {
   str="$@"
   type=0
 
-  for RE in "^Lu?o?gu?\s*\K(\w+)" "^NC\s*\K([0-9]{4,6})" "^EX\s*\K(\w{4,6})" "cf\s*\K([0-9]{3,5}[A-Z]$)" "cf\s*\K([0-9]{3,5}$)"
+  for RE in "^Lu?o?gu?\s*\K(\w+)" \
+            "^NC\s*\K([0-9]{4,6})" \
+            "^EX\s*\K(\w{4,6})" \
+            "cf\s*\K([0-9]{3,5}[A-Z]$)" \
+            "cf\s*\K([0-9]{3,5}$)" \
+            "contest\s*\K([\x00-\x7F]*)"
   do
     echo "$str" | grep -iq -P "$RE" && str=$(echo "$str" | grep -i -Po "$RE") && break
     type=$((type + 1))
@@ -185,6 +207,9 @@ _init() {
       ;;
     4)
       _CFCONTEST "$str"
+      ;;
+    5)
+      _CONTEST 1 3 5
       ;;
     *)
       error "init: invalid file string: ${str:-(NULL)}"
