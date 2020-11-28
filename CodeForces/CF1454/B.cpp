@@ -1,5 +1,5 @@
 // CodeForces/CF1454/B.cpp
-// https://codeforces.com/contest/1454/problem/A/problem/B
+// https://codeforces.com/contest/1454/problem/B
 // Created by learntocode1024 on 11/24/20.
 // AC
 

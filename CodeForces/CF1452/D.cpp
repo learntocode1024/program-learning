@@ -14,6 +14,7 @@ typedef long long LL;
 
 LL map[2][2] = {
   {1, 1},
+  
   {1, 2}
 };
 

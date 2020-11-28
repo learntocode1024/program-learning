@@ -69,7 +69,7 @@ total accepted problems count: $total  \
 
 ################################## Templates ###################################
 
-cpp="$proj_root/templates/cpp.cpp"
+CPP_T="$proj_root/templates/cpp.cpp"
 username=learntocode1024
 
 # __fill SOURCE(- for defalt) DESTINATION URL
@@ -79,17 +79,17 @@ username=learntocode1024
 ### $PROBLEMURL
 ### $FILEDIR
 __fill() {
-  src=${1}
-  file=${2}
-  url=${3}
-  if [ "-" = "$src" ]; then
-    src=$cpp
+  SRC=${1}
+  FILE=${2}
+  URL=${3}
+  if [ "-" = "$SRC" ]; then
+    SRC=$CPP_T
   fi
   sed -e 's%$DATE%'"$(date +%D)"'%' \
       -e 's%$USERNAME%'"$username"'%' \
-      -e 's%$FILEDIR%'"$file"'%' \
-      -e 's%$PROBLEMURL%'"$url"'%' \
-      "$src" > "$proj_root/$file"
+      -e 's%$FILEDIR%'"$FILE"'%' \
+      -e 's%$PROBLEMURL%'"$URL"'%' \
+      "$SRC" > "$proj_root/$file"
 }
 
 ################################ Header Comment ################################
@@ -102,7 +102,7 @@ _luogu() {
     url=https://www.luogu.com.cn/problem/${1}
   fi
   ls | grep -iq "$file" && error "luogu: File already Exist!"
-  curl -s "$url" | grep -q Exception && error "luogu: problem not exist: $1"
+  # curl -s "$url" | grep -q Exception && error "luogu: problem not exist: $1"
   __fill - "$file" "$url"
 }
 
@@ -153,23 +153,19 @@ _CFCONTEST() {
   mkdir "$proj_root/$dir"
   for rk in "A" "B" "C" "D" "E" "F"
   do
-    currurl=$url/problem/$rk
     file=$dir/$rk.cpp;
-    __fill - "$file" "$currurl"
+    __fill - "$file" "$url/problem/$rk"
   done
 }
 
 _CONTEST() {
-  id="$1"
-  echo $id
-  cnt="$2"
-  url="$3"
+  echo "$@" | read id cnt url
   dir="contest/${id}"
   mkdir "$proj_root/$dir"
   for rk in "A" "B" "C" "D" "E" "F"
   do
     if [ $cnt -eq 0 ]; then; break; fi
-    currurl=$url/problem/$rk
+    currurl=$url
     file=$dir/$rk.cpp;
     __fill - "$file" "$currurl"
     cnt=$((cnt - 1))
@@ -209,7 +205,7 @@ _init() {
       _CFCONTEST "$str"
       ;;
     5)
-      _CONTEST 1 3 5
+      _CONTEST "$str"
       ;;
     *)
       error "init: invalid file string: ${str:-(NULL)}"

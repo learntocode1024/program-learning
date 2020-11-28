@@ -1,6 +1,6 @@
-// $FILEDIR
-// $PROBLEMURL
-// Created by $USERNAME on $DATE.
+// luogu/LuoguU133371.cpp
+// https://www.luogu.com.cn/problem/U133371
+// Created by learntocode1024 on 11/28/20.
 // 
 
 #include <cstdio>
@@ -9,17 +9,11 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-void solve() {
-  
-}
+
 
 int main() {
   cin.tie(NULL);
   std::ios::sync_with_stdio(false);
-  int T = 1;
-  cin >> T;
-  while (T--) {
-    solve();
-  }
+  
   return 0;
 }

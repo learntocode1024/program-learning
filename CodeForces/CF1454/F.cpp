@@ -1,5 +1,5 @@
 // CodeForces/CF1454/F.cpp
-// https://codeforces.com/contest/1454/problem/A/problem/B/problem/C/problem/D/problem/E/problem/F
+// https://codeforces.com/contest/1454/problem/F
 // Created by learntocode1024 on 11/24/20.
 // 
 
@@ -32,7 +32,7 @@ void solve() {
   }
   int l1 = 0, l2, l3;
   while (r - l) {
-    mid = l + (r - l) >> 1;
+    mid = l + (r - l) / 2;
     while (l1 < n && a[l1] <= mid) ++l1;
   }
   memset(a, 0, n * sizeof(int));

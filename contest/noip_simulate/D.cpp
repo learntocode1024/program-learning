@@ -1,6 +1,6 @@
-// $FILEDIR
-// $PROBLEMURL
-// Created by $USERNAME on $DATE.
+// contest/noip_simulate/D.cpp
+// NOIP simulate contest on 11/28/20
+// Created by learntocode1024 on 11/28/20.
 // 
 
 #include <cstdio>
@@ -14,8 +14,6 @@ void solve() {
 }
 
 int main() {
-  cin.tie(NULL);
-  std::ios::sync_with_stdio(false);
   int T = 1;
   cin >> T;
   while (T--) {
