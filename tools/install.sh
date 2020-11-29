@@ -28,4 +28,5 @@ sh -c 'curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
 # " Color Scheme/Highlighting
 # let g:lsp_cxx_hl_use_text_props = 1
 # colorscheme afterglow
+# puremourning/vimspector
 
