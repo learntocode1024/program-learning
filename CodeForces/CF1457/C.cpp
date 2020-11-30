@@ -1,7 +1,7 @@
 // CodeForces/CF1457/C.cpp
 // https://codeforces.com/contest/1457/problem/C
 // Created by learntocode1024 on 11/29/20.
-//
+// AC
 
 #include <cstdio>
 #include <iostream>
