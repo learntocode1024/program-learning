@@ -1,28 +1,30 @@
 // CodeForces/CF1457/E.cpp
 // https://codeforces.com/contest/1457/problem/E
 // Created by learntocode1024 on 11/29/20.
-// 
+// AC
 
 #include <cstdio>
+#include <queue>
 #include <iostream>
 #include <algorithm>
 using std::cin;
 using std::cout;
 using std::endl;
 
-int c[500005], n, k;
+long long c[500005], n, k;
 
-bool cmp(int a, int b) {
+bool cmp(long long a, long long b) {
   return a > b;
 }
 
+std::priority_queue<long long> Q;
 void solve() {
   cin >> n >> k;
-  for (int kI = 0; kI < n; ++kI) {
+  for (long long kI = 0; kI < n; ++kI) {
     cin >> c[kI];
   }
   std::sort(c, c + n, cmp);
-  int bonus = 0, ans = 0, it = 0;
+  long long bonus = 0, ans = 0, it = 0;
   while (it < n && bonus >= 0) {
     ans += bonus;
     bonus += c[it++];
@@ -31,17 +33,16 @@ void solve() {
     cout << ans << endl;
     return;
   }
-  // c[--it] = bonus;
-  // int res = n - it - 1;
-  // for (int i = res % k; i > 0; i--) {
-  //   ans += c[it++] * (res / k);
-  // }
-  // for (int i = res / k; i > 0; i--) {
-  //   for (int kI = 0; kI < k; ++kI) {
-  //     ans += c[it++] * (i - 1);
-  //   }
-  // }
-  cout << ans << endl;
+  std::sort(c + it, c + n);
+  for (long long i = 0; i <= k; ++i) {
+    Q.push(0);
+  }
+  while(it < n) {
+    long long x = -Q.top(); Q.pop();
+    ans += x * c[it++];
+    Q.push(-x - 1);
+  }
+  cout << ans - bonus * Q.top() << endl;
 }
 
 int main() {
