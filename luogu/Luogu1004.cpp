@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <iostream>
 using namespace std;
-int map[9][9];
+int mapping[9][9];
 //    x1 x2 step
 int s[20][20][40];
 int N;
@@ -21,7 +21,7 @@ int main() {
     scanf("%d", &N);
     int a, b, c;
     while (scanf("%d %d %d", &a, &b, &c)) {
-        if (a) map[a - 1][b - 1] = c;
+        if (a) mapping[a - 1][b - 1] = c;
         else break;
     }
   for (int step = 1; step < (N << 1); ++step) {

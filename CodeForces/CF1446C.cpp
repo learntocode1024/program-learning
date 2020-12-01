@@ -1,25 +1,26 @@
-// CodeForces/CF1455/C.cpp
-// https://codeforces.com/contest/1455/problem/C
-// Created by learntocode1024 on 11/30/20.
-// AC
+// CodeForces/CF1446C.cpp
+// https://codeforces.com/problemset/problem/1446/C
+// Created by learntocode1024 on 12/01/20.
+// 
 
 #include <cstdio>
 #include <iostream>
+#define MX 100005
 using std::cin;
 using std::cout;
 using std::endl;
 
+int ch[31][2], int cnt[];
+
 void solve() {
-  int x, y;
-  cin >> x >> y;
-  cout << x - 1 <<  ' ' << y << endl;
+  
 }
 
 int main() {
   cin.tie(NULL);
   std::ios::sync_with_stdio(false);
   int T = 1;
-  cin >> T;
+  // cin >> T;
   while (T--) {
     solve();
   }
