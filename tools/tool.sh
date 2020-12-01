@@ -45,24 +45,12 @@ luogu: $luogu
 nowcoder: $NC
 CodeForces: $CF"
   else
-    echo "### Online Judge practices statistics  \
-
-project start time: Oct 1,2020  \
-
-last modified time: $(date +%D)  \
-
-total accepted problems count: $total  \
-
-
-[Luogu][luogu]: $luogu  \
-
-[nowcoder][nowcoder] (NC): $NC  \
-
-[Examples on _OI Advance_][oi_advance]  (EX): $EX  \
-
-[CodeForces][CF]: $CF  " > >(xclip -selection c) > >(tee)
-
-    printf "------------\nCopied into Clipboard\n"
+    sed -i -E -e '/total\saccepted\sproblems\scount:/s%[0-9]+%'"$total"'%' \
+              -e '/\[Luogu\]\[luogu\]:/s%[0-9]+%'"$luogu"'%' \
+              -e '/\[nowcoder\]\[nowcoder\]/s%[0-9]+%'"$NC"'%' \
+              -e '/\[Examples on _OI Advance_\]\[oi_advance\]/s%[0-9]+%'"$EX"'%' \
+              -e '/\[CodeForces\]\[CF\]/s%[0-9]+%'"$CF"'%' \
+              "$proj_root/README.md"
   fi
   unset total luogu NC EX
 }

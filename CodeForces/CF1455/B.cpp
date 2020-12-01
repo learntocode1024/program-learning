@@ -1,7 +1,7 @@
 // CodeForces/CF1455/B.cpp
 // https://codeforces.com/contest/1455/problem/B
 // Created by learntocode1024 on 11/30/20.
-// 
+// AC
 
 #include <cstdio>
 #include <algorithm>
