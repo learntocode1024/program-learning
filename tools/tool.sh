@@ -150,7 +150,7 @@ _CONTEST() {
   echo "$@" | read id cnt url
   dir="contest/${id}"
   mkdir "$proj_root/$dir"
-  for rk in "A" "B" "C" "D" "E" "F"
+  for rk in "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N"
   do
     if [ $cnt -eq 0 ]; then; break; fi
     currurl=$url

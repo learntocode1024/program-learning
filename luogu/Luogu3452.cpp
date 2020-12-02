@@ -1,81 +1,67 @@
 // luogu/Luogu3452.cpp
 // https://www.luogu.com.cn/problem/P3452
 // Created by learntocode1024 on 12/01/20.
-// 
+//
 
-#include <cstdio>
 #include <memory.h>
 #include <algorithm>
-#include <queue>
+#include <cstdio>
 #include <iostream>
+#include <list>
+#include <queue>
 #define MX 200005
 using std::cin;
 using std::cout;
 using std::endl;
-
-int n, m;
-int head[MX], nxt[MX * 10], to[MX * 10], tot;
-
-void add_edge(int a, int b) {
-  to[++tot] = b;
-  nxt[tot] = head[a];
-  head[a] = tot;
-}
-
-int num[MX], t;
-bool vis[MX] = {0};
-bool tag[MX];
+std::list<int> lt;
 std::queue<int> q;
 
-int bfs(int init) {
-  memset(tag, 0, n * sizeof(bool));
-  int cnt = 0;
-  while (!q.empty()) q.pop();
-  q.push(init);
-  while (!q.empty()) {
-    int curr = q.front();
-    q.pop();
-    vis[curr] = true;
-    for (int it = head[curr]; it != 0; it = nxt[it]) {
-      if (vis[to[it]] || tag[to[it]]) continue;
-      tag[to[it]] = true;
-    }
-    for (int i = 1; i <= n; ++i) {
-      if (!vis[i] && !tag[i]) {
-        ++cnt;
-        q.push(i);
-        vis[i] = true;
+using namespace std;
+int n, m;
+int ans;
+int h[100001], to[4000001], nx[4000001], cnt;
+int pre[100001], nxt[100001];
+bool book[100001];
+bool tmp[100001];
+int sum[100001];
+inline void add(int f, int t) {
+  nx[++cnt] = h[f];
+  to[cnt] = t;
+  h[f] = cnt;
+}
+inline void del(int x) {
+  book[x] = 1;
+  nxt[pre[x]] = nxt[x];
+  pre[nxt[x]] = pre[x];
+}
+int main() {
+  int a, b;
+  std::ios::sync_with_stdio(false);
+  cin >> n >> m;
+  for (int i = 1; i <= m; i++) {
+    cin >> a >> b;
+    add(a, b);
+    add(b, a);
+  }
+  queue<int> e;
+  int he = 1, ta = n;
+  for (int i = 1; i <= n; i++) pre[i] = i - 1, nxt[i] = i + 1;
+  nxt[n] = 0;
+  for (int i = 1; i <= n; i++)
+    if (!book[i]) {
+      del(i);
+      ++ans;
+      e.push(i);
+      while (!e.empty()) {
+        int x = e.front();
+        e.pop();
+        for (int j = h[x]; j; j = nx[j]) tmp[to[j]] = 1;
+        for (int j = nxt[0]; j; j = nxt[j])
+          if (!tmp[j] && !book[j]) e.push(j), ++sum[ans], del(j);
+        for (int j = h[x]; j; j = nx[j]) tmp[to[j]] = 0;
       }
     }
-  }
-  return cnt;
-}
-
-void solve() {
-  cin >> n >> m;
-  for (int i = 0, a, b; i < m; ++i) {
-    cin >> a >> b;
-    add_edge(a, b);
-    add_edge(b, a);
-  }
-  for (int i = 1; i <= n; ++i) {
-    if (!vis[i]) num[t++] = bfs(i);
-  }
-  std::sort(num, num + t);
-  cout << t << endl;
-  for (int i = 0; i < t; ++i) {
-    cout << num[i] << " ";
-  }
-  cout << endl;
-}
-
-int main() {
-  cin.tie(NULL);
-  std::ios::sync_with_stdio(false);
-  int T = 1;
-  // cin >> T;
-  while (T--) {
-    solve();
-  }
-  return 0;
+  sort(sum + 1, sum + ans + 1);
+  printf("%d\n", ans);
+  for (int i = 1; i <= ans; i++) printf("%d ", sum[i] + 1);
 }
