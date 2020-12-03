@@ -1,6 +1,6 @@
-// $FILEDIR
-// $PROBLEMURL
-// Created by $USERNAME on $DATE.
+// contest/luogu_37890/D.cpp
+// https://www.luogu.com.cn/contest/37890#problems
+// Created by learntocode1024 on 12/03/20.
 // 
 
 #include <cstdio>
