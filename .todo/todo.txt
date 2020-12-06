@@ -1,4 +1,0 @@
-(B) dp on tree +dp @learn
-(B) dp promotion +dp @learn
-(C) learn dynamic programming +algorithm @learn
-(F) solve Luogu1169 without dp +practice @problem-to-solve

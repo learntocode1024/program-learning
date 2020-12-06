@@ -1,4 +1,0 @@
-x 2020-10-02 init project +project @git
-x 2020-10-02 Luogu P3177 +practice @current
-x 2020-10-03 develop tool scripts +project @develop
-x 2020-10-10 CodeForces CF708C +practice @dp
