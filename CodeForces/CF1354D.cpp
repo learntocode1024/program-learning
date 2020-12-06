@@ -1,5 +1,5 @@
-// CodeForces/CF1354D.cpp
-// https://codeforces.com/problemset/problem/1354/D
+// CodeForces/CF1351D.cpp
+// https://codeforces.com/problemset/problem/1353/D
 // Created by learntocode1024 on 12/01/20.
 // AC
 
