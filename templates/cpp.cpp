@@ -4,11 +4,13 @@
 // 
 
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 #define MX
 using std::cin;
 using std::cout;
 using std::endl;
+using std::memset;
 
 void solve() {
   
