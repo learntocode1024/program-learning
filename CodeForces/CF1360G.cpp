@@ -10,14 +10,13 @@ using std::cout;
 using std::endl;
 
 void solve() {
-  sw
   int n, m, a, b;
   cin >> n >> m >> a >> b;
   if (n * a != m * b) {
     cout << "NO" << endl;
     return;
   }
-
+  
 }
 
 int main() {
