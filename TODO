@@ -25,7 +25,6 @@ finish Atcoder arc_110
 ./contest/101720_NC/T4.cpp
 ./contest/101720_NC/T3.cpp
 ./contest/Atcoder_arc110/F.cpp
-./contest/Atcoder_arc110/D.cpp
 ./contest/Atcoder_arc110/E.cpp
 ./contest/110420/A.cpp
 ./contest/202710_senpai/LuoguU137403.cpp
@@ -107,8 +106,6 @@ finish Atcoder arc_110
 ./CodeForces/CF1442/C.cpp
 ./CodeForces/CF484B.cpp
 ./CodeForces/CF1446C.cpp
-./templates/codeforces/cfcontest.cpp
-./templates/cpp.cpp
 ./nowcoder_acm/NC21303.cpp
 ./nowcoder_acm/NC21313.cpp
 ./nowcoder_acm/NC14419.cpp
