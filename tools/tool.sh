@@ -73,7 +73,7 @@ __fill() {
   if [ "-" = "$SRC" ]; then
     SRC=$CPP_T
   fi
-  sed -e 's%$DATE%'"$(date +%D)"'%' \
+  sed -e 's%$DATE%'"$(date +%m-%d-%y)"'%' \
       -e 's%$USERNAME%'"$username"'%' \
       -e 's%$FILEDIR%'"$FILE"'%' \
       -e 's%$PROBLEMURL%'"$URL"'%' \
