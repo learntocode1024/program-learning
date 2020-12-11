@@ -1,7 +1,7 @@
 // CodeForces/CF1451/A.cpp
 // https://codeforces.com/contest/1451/problem/A
 // Created by learntocode1024 on 11/21/20.
-// 
+// AC
 
 #include <iostream>
 using std::cin;

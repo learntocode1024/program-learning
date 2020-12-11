@@ -1,7 +1,7 @@
-// $FILEDIR
-// Author: $USERNAME
-// Date: $DATE
-// URL: $PROBLEMURL
+// CodeForces/CF1461/D.cpp
+// Author: learntocode1024
+// Date: 12-11-20
+// URL: https://codeforces.com/contest/1461/problem/D
 // tag:
 // 
 
