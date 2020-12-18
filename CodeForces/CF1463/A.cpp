@@ -2,7 +2,7 @@
 // Author: learntocode1024
 // Date: 12-17-20
 // URL: https://codeforces.com/contest/1463/problem/A
-// tag:
+// tag: easy
 // AC
 
 #include <cstdio>
