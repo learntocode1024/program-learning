@@ -2,7 +2,7 @@
 // Author: learntocode1024
 // Date: 12-15-20
 // URL: https://codeforces.com/contest/1462/problem/E
-// tag: combine
+// tag: combination, bruteforce
 // AC
 
 #include <cstdio>
@@ -64,6 +64,7 @@ void solve() {
     else ans = (ans + mod - del) % mod;
   }
   cout << ans << endl;
+  // HINT: when dealing with multiple test cases, we don't use memset
   for (int i = 0; i <= n; ++i) {
     cnt[i] = 0;
   }
