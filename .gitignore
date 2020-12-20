@@ -6,3 +6,4 @@ buf*
 *out
 out
 debug/*
+.ccls-cache
