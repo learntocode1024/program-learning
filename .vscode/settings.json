@@ -48,5 +48,6 @@
     },
     "cSpell.words": [
         "luogu"
-    ]
+    ],
+    "ccls.codeLens.enabled": false
 }
