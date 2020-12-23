@@ -7,3 +7,6 @@ buf*
 out
 debug/*
 .ccls-cache
+input
+output
+codeOutput
