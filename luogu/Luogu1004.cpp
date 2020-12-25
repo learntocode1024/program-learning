@@ -4,30 +4,36 @@
 // AC
 #include <cstdio>
 #include <iostream>
+#include <algorithm>
 using namespace std;
-int mapping[9][9];
-//    x1 x2 step
-int s[20][20][40];
-int N;
 
-int max(int a, int b, int c, int d) {
-    if (b > a) a = b;
-    if (c > a) a = c;
-    if (d > a) a = d;
-    return a;    
-}
+int map[10][10];
+int dp[10][10][10];
 
 int main() {
-    scanf("%d", &N);
+  int n;
+  cin >> n;
+  {
     int a, b, c;
-    while (scanf("%d %d %d", &a, &b, &c)) {
-        if (a) mapping[a - 1][b - 1] = c;
-        else break;
+    cin >> a >> b >> c;
+    while (a) {
+      map[a - 1][b - 1] = c;
+      cin >> a >> b >> c;
     }
-  for (int step = 1; step < (N << 1); ++step) {
-
+  } // input
+  dp[0][0][0] = map[0][0];
+  for (int step = 1; step < n * 2 - 1; ++step) {
+    for (int i = 0; i <= min(step, n - 1); ++i) {
+      for (int j = 0; j <= min(step, n - 1); ++j) {
+        if (i) dp[i][j][step] = max(dp[i][j][step], dp[i - 1][j][step - 1]);
+        if (j) dp[i][j][step] = max(dp[i][j][step], dp[i][j - 1][step - 1]);
+        dp[i][j][step] = max(dp[i][j][step], dp[i][j][step - 1]);
+        if (i & j) dp[i][j][step] = max(dp[i][j][step], dp[i - 1][j - 1][step - 1]);
+        if (i != j) dp[i][j][step] += map[i][step - i] + map[j][step - j];
+        else dp[i][j][step] += map[i][step - i];
+      }
+    }
   }
-    int ans = s[N - 1][N - 1][(N - 1) << 1]; 
-    printf("%d", ans);
-    return 0;
+  cout << dp[n - 1][n - 1][2*n - 2] << endl;
+  return 0;
 }
