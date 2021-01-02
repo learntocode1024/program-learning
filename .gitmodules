@@ -1,0 +1,3 @@
+[submodule "contests"]
+	path = competitive-programming
+	url = https://github.com/misaka18931/competitive-programming.git
