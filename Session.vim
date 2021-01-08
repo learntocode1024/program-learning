@@ -15,6 +15,7 @@ $argadd ~/proj/program-learning
 set stal=2
 tabnew
 tabnew
+tabnew
 tabrewind
 edit Session.vim
 set splitbelow splitright
@@ -93,13 +94,40 @@ exe s:l
 normal! zt
 4
 normal! 0
-tabnext 3
+tabnext
+edit ~/.zshrc
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 103 - ((1 * winheight(0) + 4) / 8)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+103
+normal! 030|
+tabnext 4
 set stal=1
-badd +1 Session.vim
+badd +1 ~/.zshrc
 badd +1 ~/proj/program-learning
 badd +1 ~/proj/program-learning/CodeForces/CF1354D.cpp
-badd +0 ~/proj/program-learning/luogu/Luogu3452.cpp
 badd +1 ~/.vimrc
+badd +1 Session.vim
+badd +1 ~/proj/program-learning/luogu/Luogu3452.cpp
 badd +1 ~/proj/program-learning/Session.vim
 badd +330 ~/.vim/plugged/vim-afterglow-ramastered/colors/afterglow.vim
 badd +31 ~/proj/program-learning/luogu/Luogu1004.cpp

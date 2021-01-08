@@ -34,6 +34,6 @@ int main() {
       }
     }
   }
-  cout << dp[n - 1][n - 1][2*n - 2] << endl;
+  cout << dp[n - 1][n - 1][2 * n - 2] << endl;
   return 0;
 }
