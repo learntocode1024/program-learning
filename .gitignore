@@ -10,3 +10,5 @@ debug/*
 input
 output
 codeOutput
+.undodir
+Session.vim
