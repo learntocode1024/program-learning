@@ -1,5 +1,7 @@
 ### Segment Tree
+
 #### Code Template
+
 ```cpp
 int sum[MXx4]{}, tag[MXx4]{};
 
@@ -58,10 +60,11 @@ void build(const unsigned curr, int* const ptr,
   build(right, ptr, mid, r);
   sum[curr] = sum[left] + sum[right];
 }
-
 ```
+
 #### Reminders
+
 * in function ```push_down()```:  line 10:  
-when dealing with tags: accumulate the previous tags with the current one, rather than overwrite them.  
-examples:  
-use ```tag[left] += tag[curr]```  rather than ```tag[left] = tag[curr]```
+  when dealing with tags: accumulate the previous tags with the current one, rather than overwrite them.  
+  examples:  
+  use ```tag[left] += tag[curr]```  rather than ```tag[left] = tag[curr]```

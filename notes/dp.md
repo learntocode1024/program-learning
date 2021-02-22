@@ -1,25 +1,31 @@
 ### Dynamic Programming
+
 #### Reminders
+
 * **dependencies** between state spaces
-    * The current processing state space can depend on others.
-      **DO NOT** update a state space until it's confirmed not required anymore!  
-    * mind the right order of loops (which variable comes first?)  
-    * mind the order of iteration (++ or --?)  
-    * Always keep the loops of fundamental variables in outer layer.  
+  * The current processing state space can depend on others.
+    **DO NOT** update a state space until it's confirmed not required anymore!  
+  * mind the right order of loops (which variable comes first?)  
+  * mind the order of iteration (++ or --?)  
+  * Always keep the loops of fundamental variables in outer layer.  
 * always remember to ignore **invalid** status  
-    * array out-of-range  
-    * **logical invalid decision**  
+  * array out-of-range  
+  * **logical invalid decision**  
 * proper initialization values
 * to solve some problems we cannot use dp.  
-e.g. [Luogu1169](../luogu/Luogu1169_dp.cpp)
-#### Avoid Superfluous Calculation
-##### When DFS
-Caution the **list-liked data**(tree). Such data can cause deep recursion layer,
-and unnecessary / repeated calculation.  
-see [this(Luogu3177)](../luogu/Luogu3177.cpp) line 31:
-```cpp
- // use special method to avoid superfluous calculates.
-dfs(...) {
+  e.g. [Luogu1169](../luogu/Luogu1169_dp.cpp)
+  
+  #### Avoid Superfluous Calculation
+  
+  ##### When DFS
+  
+  Caution the **list-liked data**(tree). Such data can cause deep recursion layer,
+  and unnecessary / repeated calculation.  
+  see [this(Luogu3177)](../luogu/Luogu3177.cpp) line 31:
+  
+  ```cpp
+  // use special method to avoid superfluous calculates.
+  dfs(...) {
   do DFS...
   for child of curr {
     ...
@@ -35,11 +41,13 @@ dfs(...) {
     for(int j=0;j<=size[curr]+size[child];j++) dp[curr][j] = temp[j];
     size[curr] += size[child];
   }
-}
-```
-Worst O()
+  }
+  ```
+  
+  Worst O()
 
 rather than
+
 ```cpp
 // dp
 for (int i = min(k, size[curr]); i >= 0; --i) {
@@ -50,9 +58,13 @@ for (int i = min(k, size[curr]); i >= 0; --i) {
   }
 }
 ```
+
 Worst O()  
+
 #### DP on tree
+
 * to avoid search back: use `if (~size[])` rather than `bool vis[]`
-#### Monotonic Queue optimize
+  
+  #### Monotonic Queue optimize
 * use on a scrolling forward range
 * when keeping a maximum / minimum value

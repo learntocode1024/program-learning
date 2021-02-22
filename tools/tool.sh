@@ -1,12 +1,10 @@
 #################################### Global ####################################
-PROJECT=program-learning
 set -e
-cmd=$1
-shift
+proj_root="$HOME/program-learning"
 
-if ! [ -d "$proj_root" ]; then
-  exit 1;
-fi
+#if ! [ -d "$proj_root" ]; then
+
+#fi
 
 error() {
   printf "program-learning: \033[1;31merror: \033[0m%s\n" "$@" > /dev/stderr
@@ -58,7 +56,7 @@ CodeForces: $CF"
 ################################## Templates ###################################
 
 CPP_T="$proj_root/templates/cpp.cpp"
-username=learntocode1024
+username=misaka18931
 
 # __fill SOURCE(- for defalt) DESTINATION URL
 # Predefined Variables List
@@ -103,7 +101,7 @@ _NC() {
   touch "${file}"
   echo "// luogu/Luogu${1}.cpp
 // $url
-// Created by learntocode1024 on $(date +%D).
+// Created by misaka18931 on $(date +%D).
 // \
 
 
@@ -152,7 +150,7 @@ _CONTEST() {
   mkdir "$proj_root/$dir"
   for rk in "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N"
   do
-    if [ $cnt -eq 0 ]; then; break; fi
+    if [ $cnt -eq 0 ]; then break; fi
     currurl=$url
     file=$dir/$rk.cpp;
     __fill - "$file" "$currurl"
@@ -255,4 +253,4 @@ _todo() {
 }
 
 ##################################### main #####################################
-$cmd "$@"
+_init "$@"
