@@ -14,7 +14,7 @@
 #define MX 250005
 #define add_edge(X, Y, Z)                                                      \
   to##Z[++tot##Z] = Y;                                                         \
-  nxt##Z[tot##Z] = head[X];                                                    \
+  nxt##Z[tot##Z] = head##Z[X];                                                    \
   head##Z[X] = tot##Z;
 #define lowbit(X) (X & (~X + 1))
 using namespace std;
@@ -29,18 +29,18 @@ LL dp[MX], c[MX];
 LL c0[2 * MX];
 int id[MX];
 
-void dfs0(int u) {
-  static int cnt = 0;
+int cnt = 0;
+void dfs0(int u, int fa) {
   id[u] = ++cnt;
-  for (int i = head[u]; i; i = nxt[i]) {
-    int &v = to[i];
-    if (id[v]) {
-      depth[u] = depth[v] + 1;
-      st[u][0] = v;
+  depth[u] = depth[fa] + 1;
+  st[u][0] = fa;
+  for (int i = head0[u]; i; i = nxt0[i]) {
+    int &v = to0[i];
+    if (v == fa) { // v is father
       c[u] = c0[i];
       continue;
     }
-    dfs0(v);
+    dfs0(v, u);
   }
 }
 
@@ -59,30 +59,78 @@ int lca(int a, int b) {
   if (depth[a] < depth[b]) swap(a, b);
   int d = depth[a] - depth[b];
   while (d) {
-    a = st[a][lg2[lowbit(d)]];
+    a = st[a][lg2[lowbit(d)] - 1];
     d -= lowbit(d);
   }
   if (a == b) return a;
-  int step = 0;
-  
+  for (int t = 19; t >= 0; --t) {
+    if (st[a][t] != st[b][t]) {
+      a = st[a][t];
+      b = st[b][t];
+    }
+  }
+  return a;
 }
 
 stack<int> node;
 vector<int> key;
+int on_demand[MX];
+
+void dfs(int u) {
+  for (int i = head[u]; i; i = nxt[i]) {
+    int &v = to[i];
+    if (v == u) continue;
+    dfs(v);
+    dp[u] += dp[v]; 
+  }
+  if (on_demand[u]) dp[u] = c[u];
+  else dp[u] = min(c[u], dp[u]);
+}
 
 void solve() {
   int k;
   cin >> k;
+  key = vector<int> (k);
   for (int i = 0; i < k; ++i) {
     cin >> key[i];
-    if (i + 1 != k) key.push_back(0);
+    head[key[i]] = 0;
+    on_demand[key[i]] = 1;
   }
   // build Virtual tree
   sort(key.begin(), key.end(), [](int a, int b) { return id[a] < id[b]; });
   node.push(1);
   for (auto i : key) {
-    
+    int p = lca(i, node.top());
+    if (p == node.top()) node.push(i);
+    else {
+      while (id[node.top()] > id[p]) {
+        int u = node.top();
+        node.pop();
+        add_edge(u, node.top(), 0)
+        add_edge(node.top(), u, 0)
+      }
+      if (id[node.top()] < id[p]) node.push(p);
+      node.push(i);
+    }
   }
+  while (!node.empty()) {
+    int u = node.top();
+    node.pop();
+    if (node.empty()) break;
+    add_edge(u, node.top(), 0)
+    add_edge(node.top(), u, 0)
+  }
+  // dp on virtual tree
+  dfs(1);
+  cout << dp[1] << endl;
+  for (auto i : key) {
+    on_demand[i] = 0;
+  }
+}
+
+void clear() {
+  tot = 0;
+  node = stack<int>();
 }
 
 int main() {
@@ -95,11 +143,13 @@ int main() {
     cin >> c0[tot0];
     add_edge(b, a, 0) c0[tot0] = c0[tot0 - 1];
   }
-  dfs0(1);
+  dfs0(1, 0);
+  c[1] = __INT32_MAX__;
   getst();
   int T = 1;
   cin >> T;
   while (T--) {
+    clear();
     solve();
   }
   return 0;
