@@ -11,7 +11,7 @@
 #include <iostream>
 #include <stack>
 #include <vector>
-#define MX 250005
+#define MX 25//0005
 #define add_edge(X, Y, Z)                                                      \
   to##Z[++tot##Z] = Y;                                                         \
   nxt##Z[tot##Z] = head##Z[X];                                                    \
@@ -55,9 +55,11 @@ void getst() {
   }
 }
 
+LL dist;
 int lca(int a, int b) {
+  dist = __INT32_MAX__;
   if (depth[a] < depth[b]) swap(a, b);
-  int d = depth[a] - depth[b];
+  int d = depth[a] - depth[b]; 
   while (d) {
     a = st[a][lg2[lowbit(d)] - 1];
     d -= lowbit(d);
@@ -69,7 +71,7 @@ int lca(int a, int b) {
       b = st[b][t];
     }
   }
-  return a;
+  return st[a][0];
 }
 
 stack<int> node;
@@ -79,7 +81,7 @@ int on_demand[MX];
 void dfs(int u) {
   for (int i = head[u]; i; i = nxt[i]) {
     int &v = to[i];
-    if (v == u) continue;
+    if (depth[v] < depth[u]) continue;
     dfs(v);
     dp[u] += dp[v]; 
   }
@@ -88,6 +90,7 @@ void dfs(int u) {
 }
 
 void solve() {
+  
   int k;
   cin >> k;
   key = vector<int> (k);
@@ -106,10 +109,10 @@ void solve() {
       while (id[node.top()] > id[p]) {
         int u = node.top();
         node.pop();
-        add_edge(u, node.top(), 0)
-        add_edge(node.top(), u, 0)
+        if (id[node.top()] < id[p]) node.push(p);
+        add_edge(u, node.top(),)
+        add_edge(node.top(), u,)
       }
-      if (id[node.top()] < id[p]) node.push(p);
       node.push(i);
     }
   }
@@ -117,9 +120,12 @@ void solve() {
     int u = node.top();
     node.pop();
     if (node.empty()) break;
-    add_edge(u, node.top(), 0)
-    add_edge(node.top(), u, 0)
+    add_edge(u, node.top(),)
+    add_edge(node.top(), u,)
   }
+  // for (int i = 1; i <= n; ++i) {
+  //   for (int t = head[i]; t; t = nxt[t]) cerr << i << " " << to[t] << endl;
+  // }
   // dp on virtual tree
   dfs(1);
   cout << dp[1] << endl;
