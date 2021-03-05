@@ -3,27 +3,27 @@
 // Date: 02-22-21
 // URL: https://www.luogu.com.cn/problem/P2495
 // tag: Virtual-tree, dp
-//
+// AC
 
 #include <algorithm>
+#include <climits>
 #include <cstdio>
-#include <cstring>
 #include <iostream>
 #include <stack>
 #include <vector>
-#define MX 25//0005
+#define MX 250005
 #define add_edge(X, Y, Z)                                                      \
   to##Z[++tot##Z] = Y;                                                         \
-  nxt##Z[tot##Z] = head##Z[X];                                                    \
+  nxt##Z[tot##Z] = head##Z[X];                                                 \
   head##Z[X] = tot##Z;
-#define lowbit(X) (X & (~X + 1))
 using namespace std;
 typedef long long LL;
 
 int n;
-int st[MX][20], lg2[MX], depth[MX];
+int st[MX][20], depth[MX];
+LL c1[MX][20];
 int head0[MX], nxt0[2 * MX], to0[2 * MX], tot0;
-int head[MX], nxt[2 * MX], to[2 * MX], tot;
+int head[MX], nxt[MX], to[MX], tot;
 
 LL dp[MX], c[MX];
 LL c0[2 * MX];
@@ -37,7 +37,7 @@ void dfs0(int u, int fa) {
   for (int i = head0[u]; i; i = nxt0[i]) {
     int &v = to0[i];
     if (v == fa) { // v is father
-      c[u] = c0[i];
+      c1[u][0] = c0[i];
       continue;
     }
     dfs0(v, u);
@@ -45,26 +45,27 @@ void dfs0(int u, int fa) {
 }
 
 void getst() {
-  for (int i = 1; i < n; ++i) {
-    lg2[i] = lg2[i - 1] + (i == (1 << lg2[i - 1]));
-  }
   for (int step = 1; step < 19; ++step) {
     for (int i = 1; i <= n; ++i) {
       st[i][step] = st[st[i][step - 1]][step - 1];
+      c1[i][step] = min(c1[i][step - 1], c1[st[i][step - 1]][step - 1]);
     }
   }
 }
 
-LL dist;
 int lca(int a, int b) {
-  dist = __INT32_MAX__;
-  if (depth[a] < depth[b]) swap(a, b);
-  int d = depth[a] - depth[b]; 
-  while (d) {
-    a = st[a][lg2[lowbit(d)] - 1];
-    d -= lowbit(d);
+  if (depth[a] < depth[b])
+    swap(a, b);
+  if (depth[a] > depth[b]) {
+    for (int t = 19; t >= 0; --t) {
+      if (depth[st[a][t]] > depth[b]) {
+        a = st[a][t];
+      }
+    }
+    a = st[a][0];
   }
-  if (a == b) return a;
+  if (a == b)
+    return a;
   for (int t = 19; t >= 0; --t) {
     if (st[a][t] != st[b][t]) {
       a = st[a][t];
@@ -74,6 +75,20 @@ int lca(int a, int b) {
   return st[a][0];
 }
 
+LL getdist(int a, int b) {
+  LL dist = __INT64_MAX__;
+  if (depth[a] < depth[b])
+    swap(a, b);
+  for (int t = 19; t >= 0; --t) {
+    if (depth[st[a][t]] > depth[b]) {
+      dist = min(dist, c1[a][t]);
+      a = st[a][t];
+    }
+  }
+  dist = min(dist, c1[a][0]);
+  return dist;
+}
+
 stack<int> node;
 vector<int> key;
 int on_demand[MX];
@@ -81,19 +96,23 @@ int on_demand[MX];
 void dfs(int u) {
   for (int i = head[u]; i; i = nxt[i]) {
     int &v = to[i];
-    if (depth[v] < depth[u]) continue;
+    if (depth[v] < depth[u])
+      continue;
     dfs(v);
-    dp[u] += dp[v]; 
+    dp[u] += dp[v];
+    // clear child data
+    dp[v] = on_demand[v] = c[v] = head[v] = 0;
   }
-  if (on_demand[u]) dp[u] = c[u];
-  else dp[u] = min(c[u], dp[u]);
+  if (on_demand[u])
+    dp[u] = c[u];
+  else
+    dp[u] = min(c[u], dp[u]);
 }
 
 void solve() {
-  
   int k;
   cin >> k;
-  key = vector<int> (k);
+  key = vector<int>(k);
   for (int i = 0; i < k; ++i) {
     cin >> key[i];
     head[key[i]] = 0;
@@ -104,14 +123,16 @@ void solve() {
   node.push(1);
   for (auto i : key) {
     int p = lca(i, node.top());
-    if (p == node.top()) node.push(i);
+    if (p == node.top())
+      node.push(i);
     else {
       while (id[node.top()] > id[p]) {
         int u = node.top();
         node.pop();
-        if (id[node.top()] < id[p]) node.push(p);
-        add_edge(u, node.top(),)
-        add_edge(node.top(), u,)
+        if (id[node.top()] < id[p])
+          node.push(p);
+        c[u] = getdist(u, node.top());
+        add_edge(node.top(), u, )
       }
       node.push(i);
     }
@@ -119,28 +140,24 @@ void solve() {
   while (!node.empty()) {
     int u = node.top();
     node.pop();
-    if (node.empty()) break;
-    add_edge(u, node.top(),)
-    add_edge(node.top(), u,)
+    if (node.empty())
+      break;
+    c[u] = getdist(u, node.top());
+    add_edge(node.top(), u, )
   }
-  // for (int i = 1; i <= n; ++i) {
-  //   for (int t = head[i]; t; t = nxt[t]) cerr << i << " " << to[t] << endl;
-  // }
   // dp on virtual tree
   dfs(1);
   cout << dp[1] << endl;
-  for (auto i : key) {
-    on_demand[i] = 0;
-  }
 }
 
-void clear() {
+inline void clear() {
   tot = 0;
-  node = stack<int>();
+  dp[1] = on_demand[1] = head[1] = 0;
+  c[1] = INT64_MAX;
 }
 
 int main() {
-  cin.tie(NULL);
+  cin.tie(nullptr);
   std::ios::sync_with_stdio(false);
   cin >> n;
   for (int i = 1, a, b; i < n; ++i) {
@@ -150,7 +167,6 @@ int main() {
     add_edge(b, a, 0) c0[tot0] = c0[tot0 - 1];
   }
   dfs0(1, 0);
-  c[1] = __INT32_MAX__;
   getst();
   int T = 1;
   cin >> T;
