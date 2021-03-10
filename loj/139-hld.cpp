@@ -2,6 +2,7 @@
 // https://loj.ac/p/139
 // Description: HLD(heavy-light-decomposition) template
 // tag: hld, tree
+// AC
 
 #include <algorithm>
 #include <climits>
@@ -83,7 +84,7 @@ void hld(int u, int t) {
 
 void init() {
   root = 1;
-  cin.tie(nullptr);
+  cin.tie(NULL);
   ios::sync_with_stdio(false);
   cin >> n;
   for (int i = 1; i <= n; ++i) {
@@ -152,7 +153,9 @@ LL path_get(int a, int b) {
 }
 
 void tree_edit(int u, LL val) {
-  if (lca(root, u) == u) {
+  if (root == u)
+    return change(1, n, val); // holy shit!
+  else if (lca(root, u) == u) {
     change(1, n, val);
     lca_1 = findson(u, root);
     change(dfn[lca_1], dfn[lca_1] + siz[lca_1] - 1, -val);
@@ -162,7 +165,8 @@ void tree_edit(int u, LL val) {
 }
 
 LL tree_get(int u) {
-  if (lca(root, u) == u) {
+  if (root == u) return get(1, n);
+  else if (lca(root, u) == u) {
     lca_1 = findson(u, root);
     return get(1, n) - get(dfn[lca_1], dfn[lca_1] + siz[lca_1] - 1);
   } else {
