@@ -1,4 +1,4 @@
-// loj/139.cpp
+// loj/139-hld.cpp
 // https://loj.ac/p/139
 // Description: HLD(heavy-light-decomposition) template
 // tag: hld, tree
