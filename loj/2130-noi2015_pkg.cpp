@@ -1,4 +1,3 @@
-
 // loj/2130-noi2015_pkg.cpp
 // https://loj.ac/p/2130
 // tag: segment-tree, hld
