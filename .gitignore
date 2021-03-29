@@ -5,10 +5,12 @@ buf*
 *.out
 *out
 out
-debug/*
+debug
+bin
 .ccls-cache
 input
 output
 codeOutput
 .undodir
 Session.vim
+*.exec
