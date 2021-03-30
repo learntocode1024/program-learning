@@ -1,115 +1,95 @@
-// Codeforces/CF600E.cpp
+// Codeforces/CF323C.cpp
 // Author: misaka18931
-// Date: Mar 21, 2021
-// tag: segment-tree merge
+// Date: 02-06-21
+// URL: https://codeforces.com/problemset/problem/323/C
+// tag: segment tree
+// Accepted
 
-#include <algorithm>
 #include <cstdio>
+#include <cstring>
 #include <iostream>
-#define MX 100005
+#define MX 2000005
+using namespace std;
 
 struct node {
   node *lc;
   node *rc;
-  long long ans;
   int cnt;
-  node() : lc(0), rc(0), ans(0), cnt(0){};
+  node() : lc(0), rc(0), cnt(0){};
 };
+
+int n;
+int a[MX];
+int pos[MX];
+node tree[MX * 20];
+node *tot = tree;
 node *root[MX];
 
-inline void pushup(node *curr) {
-  if (curr->lc == NULL) {
-    curr->cnt = curr->rc->cnt;
-    curr->ans = curr->rc->ans;
-    return;
-  }
-  if (curr->rc == NULL) {
-    curr->cnt = curr->lc->cnt;
-    curr->ans = curr->lc->ans;
-    return;
-  }
-  const int &lcnt = curr->lc->cnt;
-  const int &rcnt = curr->rc->cnt;
-  if (lcnt == rcnt)
-    curr->cnt = lcnt, curr->ans = curr->lc->ans + curr->rc->ans;
-  else if (lcnt > rcnt)
-    curr->cnt = lcnt, curr->ans = curr->lc->ans;
-  else
-    curr->cnt = rcnt, curr->ans = curr->rc->ans;
+node *build(int l, int r) {
+  node *ret = ++tot;
+  if (r == l + 1)
+    return ret;
+  int mid = l + (r - l) / 2;
+  ret->lc = build(l, mid);
+  ret->rc = build(mid, r);
+  return ret;
 }
 
-void insert(node *&curr, int l, int r, int val) {
-  if (curr == NULL)
-    curr = new node();
-  if (r - l == 1) {
-    ++curr->cnt;
-    curr->ans = l;
-    return;
+node *insert(node *const p, int l, int r, int val) {
+  node *ret = ++tot;
+  ret->lc = p->lc;
+  ret->rc = p->rc;
+  if (r == l + 1) {
+    ret->cnt = p->cnt + 1;
+    return ret;
   }
   int mid = l + (r - l) / 2;
   if (val < mid)
-    insert(curr->lc, l, mid, val);
+    ret->lc = insert(ret->lc, l, mid, val);
   else
-    insert(curr->rc, mid, r, val);
-  pushup(curr);
+    ret->rc = insert(ret->rc, mid, r, val);
+  ret->cnt = ret->lc->cnt + ret->rc->cnt;
+  return ret;
 }
 
-void merge(node *&dest, node *src) {
-  if (dest == NULL) {
-    dest = src;
-    return;
-  }
-  if (dest->lc == dest->rc) { // leaf
-    dest->cnt += src->cnt;
-    delete src;
-    return;
-  }
-  if (src->lc != NULL)
-    merge(dest->lc, src->lc);
-  if (src->rc != NULL)
-    merge(dest->rc, src->rc);
-  pushup(dest);
-  delete src;
+int query(node *const curr, int l, int r, int s, int t) {
+  if (l == s && r == t)
+    return curr->cnt;
+  int mid = l + (r - l) / 2;
+  int ans = 0;
+  if (s < mid)
+    ans += query(curr->lc, l, mid, s, min(t, mid));
+  if (t > mid)
+    ans += query(curr->rc, mid, r, max(s, mid), t);
+  return ans;
 }
 
-inline long long getans(const node *root) { return root->ans; }
-
-int n;
-int c[MX];
-long long print_val[MX];
-
-int head[MX], to[MX << 1], nxt[MX << 1], tt;
-bool vis[MX];
-#define add_edge(X, Y)                                                         \
-  to[++tt] = Y;                                                                \
-  nxt[tt] = head[X];                                                           \
-  head[X] = tt;
-
-void dfs(int u) {
-  vis[u] = 1;
-  for (int i = head[u]; i; i = nxt[i]) {
-    int &v = to[i];
-    if (vis[v]) continue;
-    dfs(v);
-    merge(root[u], root[v]);
-  }
-  insert(root[u], 1, n + 1, c[u]);
-  print_val[u] = getans(root[u]);
-}
+int x = -1;
+#define f(X) ((X + x + n) % n + 1)
 
 int main() {
   scanf("%d", &n);
   for (int i = 1; i <= n; ++i)
-    scanf("%d", c + i);
-  for (int i = 1; i < n; ++i) {
-    int a, b;
-    scanf("%d%d", &a, &b);
-    add_edge(a, b) add_edge(b, a)
+    scanf("%d", a + i);
+  for (int i = 1, j; i <= n; ++i) {
+    scanf("%d", &j);
+    pos[j] = i;
   }
-  dfs(1);
+  root[0] = build(1, n + 1);
   for (int i = 1; i <= n; ++i) {
-    printf("%lld ", print_val[i]);
+    root[i] = insert(root[i - 1], 1, n + 1, pos[a[i]]);
   }
-  putchar('\n');
+  int T;
+  scanf("%d", &T);
+  int v1, v2, v3, v4, l1, r1, l2, r2;
+  while (T--) {
+    scanf("%d%d%d%d", &v1, &v2, &v3, &v4);
+    v1 = f(v1), v2 = f(v2), v3 = f(v3), v4 = f(v4);
+    l1 = min(v1, v2), l2 = min(v3, v4);
+    r1 = max(v1, v2), r2 = max(v3, v4);
+    x = query(root[r1], 1, n + 1, l2, r2 + 1) -
+        query(root[l1 - 1], 1, n + 1, l2, r2 + 1);
+    printf("%d\n", x);
+  }
   return 0;
 }
